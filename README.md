@@ -43,8 +43,12 @@ Then open **http://localhost:3001** and type a feature request, e.g.
 ### Demo replay (no agent needed)
 
 ```bash
-DEMO_MODE=1 npm start   # replays a recorded real run through the same UI (banner shown)
+DEMO_MODE=1 npm start                      # bash
+$env:DEMO_MODE="1"; npm start              # PowerShell (Windows)
 ```
+
+Replays a recorded **real** run through the same UI (banner shown). Other transcripts:
+see [Demo replay sources](#demo-replay-sources).
 
 ## Repo layout
 
@@ -76,6 +80,18 @@ DEMO_TRANSCRIPT=fixtures/demo-transcript.json DEMO_MODE=1 npm start             
 ```
 
 ## What we learned running it live
+
+Three full live sessions (`claude -p` + real Kane browser runs), no human touching the app:
+
+| Run | Prompt | Outcome | Total | Kane attempts |
+|---|---|---|---|---|
+| #1 | email validation | ✅ `verified` | 2m 28s · 9 turns | 1 — PASS (73s, 23.5 cr) |
+| #2 | password rule | ❌ `failed` (watchdog) | 10m (killed) | 2 — FAIL, FAIL (197s / 204s) |
+| #3 | password rule, hardened grammar | ✅ `verified` | 4m 35s · 11 turns | 2 — FAIL (79.5s, browser flake) → **PASS** (50.2s, 18.5 cr) |
+
+Run #3 is the money shot: a **real** Kane failure (browser screenshot flake) that the agent
+retried on its own and passed — the autonomous loop closing live, with dashboard evidence
+for both the failure and the pass. That run is the default `DEMO_MODE` replay.
 
 Every rule in `target-app/CLAUDE.md` was earned empirically. Two examples:
 
@@ -113,6 +129,18 @@ Every rule in `target-app/CLAUDE.md` was earned empirically. Two examples:
 
 (The fix-loop moment — FAIL → agent fixes → PASS — is shown either live or via the
 `DEMO_TRANSCRIPT=fixtures/demo-transcript.json` replay if the live run passes first try.)
+
+---
+
+## Submission paragraph
+
+> ProofLoop is a live window into an agent's build-verify loop. Type a feature request in plain
+> English; a headless Claude Code session implements it in a small target app, then calls Kane CLI
+> itself to verify the change in a real browser — reading Kane's NDJSON result, fixing what failed,
+> and re-verifying, all in one autonomous session. ProofLoop's backend never calls Kane: it only
+> translates the agent's own tool stream into a real-time status UI, with clickable Kane evidence
+> (dashboard run URL + evidence pack) for every verification. Built with Claude Code; verified with
+> Kane CLI; ships with a one-command local setup and an honest hosted replay fallback.
 
 ---
 
