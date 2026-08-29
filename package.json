@@ -1,0 +1,13 @@
+{
+  "name": "proofloop-workspace",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ProofLoop — one command runs everything (target-app + backend + built frontend)",
+  "scripts": {
+    "setup": "npm --prefix target-app install && npm --prefix proofloop install && npm --prefix proofloop/frontend install",
+    "build": "npm --prefix proofloop run build && npm --prefix proofloop/frontend run build",
+    "start": "npm run setup && npm run build && npm --prefix proofloop run start",
+    "dev": "npm run setup && npm --prefix proofloop run dev",
+    "test": "npm --prefix proofloop test"
+  }
+}
