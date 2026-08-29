@@ -1,0 +1,78 @@
+[
+ {
+  "kind": "status",
+  "payload": {
+   "status": "building",
+   "detail": "Starting agent session (claude -p)"
+  },
+  "delayMs": 700
+ },
+ {
+  "kind": "status",
+  "payload": {
+   "status": "building"
+  },
+  "delayMs": 3000
+ },
+ {
+  "kind": "status",
+  "payload": {
+   "status": "building"
+  },
+  "delayMs": 700
+ },
+ {
+  "kind": "status",
+  "payload": {
+   "status": "verifying",
+   "detail": "export KANE_CLI_USER_AGENT=claude-code\ncd \"/d/8. Hackathon/kane/target-app\" && kane-cli run --agent --url http://localhost:4000 --timeout 300 \"Click the Name field and type 'Ada Lovelace'. Click the Email field and type 'ada@example.com'. Click the Password field and type 'short1'. Click the Sign Up button. Verify that an error message stating the password must be at least 8 characters long and contain at least one digit is visible and that no success message is visible. Click the Password field, clear it, and type 'nodigits'. Click the Sign Up button. Verify that the same password error message is visible and that no success message is visible. Click the Password field, clear it, and type 'secure123'. Click the Sign Up button. Verify that the success message confirming the account was created is visible.\""
+  },
+  "delayMs": 3000
+ },
+ {
+  "kind": "kane_result",
+  "payload": {
+   "flowDescription": "Click the Name field and type 'Ada Lovelace'. Click the Email field and type 'ada@example.com'. Click the Password field and type 'short1'. Click the Sign Up button. Verify that an error message stating the password must be at least 8 characters long and contain at least one digit is visible and that no success message is visible. Click the Password field, clear it, and type 'nodigits'. Click the Sign Up button. Verify that the same password error message is visible and that no success message is visible. Click the Password field, clear it, and type 'secure123'. Click the Sign Up button. Verify that the success message confirming the account was created is visible.",
+   "passed": false,
+   "reason": "attempted sign-up flow on localhost",
+   "testUrl": "https://test-manager.lambdatest.com/projects/01M13BY877W2766TPKABHAJC36/test-cases/01M160J9ANHHD2S8D72PCGSS7F/dashboard/share/US_30Z05C92XM718MQU9XAHU7IGHHHOQG1YJHKX9ZRB3KJTCQEWMUM2WNCZ2FXIUQHS?type=summary&agentView=true&fqdn=summary-page",
+   "evidenceDir": "C:\\Users\\M S I/.testmuai/kaneai/sessions\\5bea559b-a943-4349-b8f7-77fb4d98a937",
+   "durationSec": 197.2,
+   "credits": 42.29393500000001,
+   "timestamp": "2026-08-29T05:44:53.802Z"
+  },
+  "delayMs": 5000
+ },
+ {
+  "kind": "status",
+  "payload": {
+   "status": "verifying",
+   "detail": "export KANE_CLI_USER_AGENT=claude-code\ncd \"/d/8. Hackathon/kane/target-app\" && kane-cli run --agent --url http://localhost:4000 --timeout 300 --headless \"Click the Name field and type 'Ada Lovelace'. Click the Email field and type 'ada@example.com'. Click the Password field and type 'short1'. Click the Sign Up button. Verify that the error message stating the password must be at least 8 characters long and contain at least one digit is visible and that the success message is not visible. Click the Password field, clear it, and type 'nodigits'. Click the Sign Up button. Verify that the error message stating the password must be at least 8 characters long and contain at least one digit is visible again. Click the Password field, clear it, and type 'secure123'. Click the Sign Up button. Verify that the success message confirming the account was created is visible.\""
+  },
+  "delayMs": 3000
+ },
+ {
+  "kind": "kane_result",
+  "payload": {
+   "flowDescription": "Click the Name field and type 'Ada Lovelace'. Click the Email field and type 'ada@example.com'. Click the Password field and type 'short1'. Click the Sign Up button. Verify that the error message stating the password must be at least 8 characters long and contain at least one digit is visible and that the success message is not visible. Click the Password field, clear it, and type 'nodigits'. Click the Sign Up button. Verify that the error message stating the password must be at least 8 characters long and contain at least one digit is visible again. Click the Password field, clear it, and type 'secure123'. Click the Sign Up button. Verify that the success message confirming the account was created is visible.",
+   "passed": false,
+   "reason": "The signup flow appears to have worked, but the automation did not recognize the finished success state and got stuck.",
+   "testUrl": "https://test-manager.lambdatest.com/projects/01M13BY877W2766TPKABHAJC36/test-cases/01M160TB375BGP7PX6ES1XX05C/dashboard/share/US_MJFD6GF8WSXKAX1QIUT9TKXFZTT0G2IDV495EUWHN87N9XSP7AYI7K6ISZGWGR06?type=summary&agentView=true&fqdn=summary-page",
+   "evidenceDir": "C:\\Users\\M S I/.testmuai/kaneai/sessions\\0de52f21-6a10-46f2-9b2b-6d2eb425a9e0",
+   "durationSec": 204.6,
+   "credits": 85.84563999999997,
+   "timestamp": "2026-08-29T05:49:34.174Z"
+  },
+  "delayMs": 5000
+ },
+ {
+  "kind": "run_complete",
+  "payload": {
+   "finalStatus": "failed",
+   "attempts": 2,
+   "reason": "watchdog timeout after 600s \u00e2\u20ac\u201d process tree killed",
+   "isError": false
+  },
+  "delayMs": 2000
+ }
+]

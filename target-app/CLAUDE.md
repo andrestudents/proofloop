@@ -27,6 +27,13 @@ kane-cli run --agent --url http://localhost:4000 --timeout 300 "<objective>"
 - End every objective with a clear terminal assertion ("verify that ... is visible").
 - For form-validation features: include BOTH a negative case (invalid input is rejected and the
   error message is visible) and a positive case (valid input is accepted) in the objective.
+- KEEP IT SHORT: at most 2 submit scenarios per objective (one negative + one positive). Long
+  multi-scenario objectives make Kane's browser agent slow and prone to getting stuck.
+- NEVER ask Kane to "clear" a field. Instead order the steps so each scenario types into a
+  field right after focusing it, or keep one scenario per run.
+- If a Kane run fails but you are confident the code is correct: SIMPLIFY the objective
+  (shorter flow, fewer steps) on the retry instead of repeating the same one — a shorter
+  objective passes far more reliably than an identical retry.
 
 ## Code conventions
 

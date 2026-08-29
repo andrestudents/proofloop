@@ -1,0 +1,71 @@
+[
+ {
+  "kind": "status",
+  "payload": {
+   "status": "building",
+   "detail": "Starting agent session (claude -p)"
+  },
+  "delayMs": 700
+ },
+ {
+  "kind": "status",
+  "payload": {
+   "status": "building"
+  },
+  "delayMs": 3500
+ },
+ {
+  "kind": "status",
+  "payload": {
+   "status": "building"
+  },
+  "delayMs": 700
+ },
+ {
+  "kind": "status",
+  "payload": {
+   "status": "building"
+  },
+  "delayMs": 2000
+ },
+ {
+  "kind": "status",
+  "payload": {
+   "status": "verifying",
+   "detail": "kane-cli run --agent --url http://localhost:4000 --timeout 300 \"Click the Name field and type Ada. Click the Email field and type not-an-email. Click the Sign Up button. Verify that the error message asking for a valid email address is visible and the success message is not visible. Then click the Email field, clear it, and type ada@example.com into the Email field. Click the Sign Up button. Verify that the success message about the account being created is visible.\""
+  },
+  "delayMs": 2200
+ },
+ {
+  "kind": "kane_result",
+  "payload": {
+   "flowDescription": "Click the Name field and type Ada. Click the Email field and type not-an-email. Click the Sign Up button. Verify that the error message asking for a valid email address is visible and the success message is not visible. Then click the Email field, clear it, and type ada@example.com into the Email field. Click the Sign Up button. Verify that the success message about the account being created is visible.",
+   "passed": true,
+   "reason": "completed sign-up form submission on localhost",
+   "testUrl": "https://test-manager.lambdatest.com/projects/01M13BY877W2766TPKABHAJC36/test-cases/01M1608PNRKNAW6ERQC18K4V6Q/dashboard/share/US_5XC9T679Z0RPAFN5G4EKJ5HLKA4R18M1E5VXAMTCS75FDS1IFIWZ18JASTGGZS1I?type=summary&agentView=true&fqdn=summary-page",
+   "evidenceDir": "C:\\Users\\M S I/.testmuai/kaneai/sessions\\c674342b-0140-4d35-ab75-37f159deac37",
+   "durationSec": 73,
+   "credits": 23.506099999999993,
+   "timestamp": "2026-08-29T05:37:24.865Z"
+  },
+  "delayMs": 4500
+ },
+ {
+  "kind": "status",
+  "payload": {
+   "status": "verified"
+  },
+  "delayMs": 700
+ },
+ {
+  "kind": "run_complete",
+  "payload": {
+   "finalStatus": "verified",
+   "attempts": 1,
+   "reason": "agent session ended (exit 0)",
+   "numTurns": 9,
+   "isError": false
+  },
+  "delayMs": 2200
+ }
+]

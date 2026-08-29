@@ -30,10 +30,17 @@ export const PORT = Number(process.env.PORT || 3001);
 export const TARGET_APP_PORT = Number(process.env.TARGET_APP_PORT || 4000);
 export const TARGET_APP_URL = process.env.TARGET_APP_URL || `http://localhost:${TARGET_APP_PORT}`;
 
-/** Wall-clock cap for a whole agent run (FR-13). */
-export const WATCHDOG_MS = Number(process.env.WATCHDOG_MS || 10 * 60 * 1000);
+/**
+ * Wall-clock cap for a whole agent run (FR-13). 20 min: a single real Kane run can take
+ * 200s+, so 3 attempts (the prompt cap) plus build/fix time needs the headroom.
+ */
+export const WATCHDOG_MS = Number(process.env.WATCHDOG_MS || 20 * 60 * 1000);
 /** Per-run API spend cap forwarded to claude (NFR-6). */
 export const MAX_BUDGET_USD = process.env.MAX_BUDGET_USD || "3";
 export const DEMO_MODE = process.env.DEMO_MODE === "1";
+/**
+ * DEMO_MODE replay source. Default: a REAL captured run (its kane evidence URLs are live).
+ * Set DEMO_TRANSCRIPT=fixtures/demo-transcript.json for the synthetic fix-loop showcase.
+ */
 export const DEMO_TRANSCRIPT =
-  process.env.DEMO_TRANSCRIPT || path.join(FIXTURES_DIR, "demo-transcript.json");
+  process.env.DEMO_TRANSCRIPT || path.join(FIXTURES_DIR, "demo-transcript-real.json");

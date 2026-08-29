@@ -94,7 +94,7 @@ export function startRun(prompt: string): string {
 
   const watchdog = setTimeout(() => {
     killTree(child.pid);
-    finalize(run, "failed", `watchdog timeout after ${Math.round(WATCHDOG_MS / 1000)}s — process tree killed`);
+    finalize(run, "failed", `watchdog timeout after ${Math.round(WATCHDOG_MS / 1000)}s - process tree killed`);
   }, WATCHDOG_MS);
 
   function apply(events: AgentEvent[]): void {
