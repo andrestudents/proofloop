@@ -200,21 +200,27 @@ export function createReplayRun(prompt: string, transcriptPath?: string): string
   emit(run, "status", { status: "building", detail: "DEMO REPLAY — recorded events, no agent running" });
 
   let cancelled = false;
-  const finish = (finalStatus: RunRecord["status"], attempts: number) => {
+  const finish = (emitComplete: boolean) => {
     if (cancelled) return;
     cancelled = true;
-    run.status = finalStatus;
     run.endedAt = new Date().toISOString();
     run.finalReason = "demo replay finished";
     activeRunId = null;
-    emit(run, "run_complete", { finalStatus, attempts, reason: "demo replay finished", isError: false });
+    if (emitComplete) {
+      emit(run, "run_complete", {
+        finalStatus: run.status,
+        attempts: run.kaneAttempts,
+        reason: "demo replay finished",
+        isError: false,
+      });
+    }
   };
 
   let i = 0;
   const step = (): void => {
     if (cancelled) return;
     if (i >= items.length) {
-      finish((run.events.at(-1)?.payload as { finalStatus?: RunRecord["status"] })?.finalStatus ?? "verified", run.kaneAttempts);
+      finish(true); // transcript exhausted without its own run_complete — synthesize one
       return;
     }
     const item = items[i++];
@@ -233,6 +239,11 @@ export function createReplayRun(prompt: string, transcriptPath?: string): string
       });
     }
     emit(run, item.kind, item.payload);
+    if (item.kind === "run_complete") {
+      run.status = (item.payload.finalStatus as RunRecord["status"]) ?? run.status;
+      finish(false); // its own run_complete was just emitted — finalize silently
+      return;
+    }
     setTimeout(step, Math.max(150, item.delayMs ?? 600));
   };
   setTimeout(step, 400);

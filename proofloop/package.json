@@ -9,7 +9,7 @@
     "build": "tsc -p tsconfig.json",
     "start": "node dist/server.js",
     "dev": "tsx watch src/server.ts",
-    "test": "tsx --test tests/*.test.ts"
+    "test": "tsx --test tests/kaneParser.test.ts tests/agentStream.test.ts tests/runManager.test.ts"
   },
   "dependencies": {
     "express": "^4.19.2"
