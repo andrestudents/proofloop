@@ -5,48 +5,70 @@
    "status": "building",
    "detail": "Starting agent session (claude -p)"
   },
-  "delayMs": 700
+  "delayMs": 600
  },
  {
   "kind": "status",
   "payload": {
    "status": "building"
   },
-  "delayMs": 3500
+  "delayMs": 3000
  },
  {
   "kind": "status",
   "payload": {
    "status": "building"
   },
-  "delayMs": 700
+  "delayMs": 600
  },
  {
   "kind": "status",
   "payload": {
    "status": "building"
   },
-  "delayMs": 2000
+  "delayMs": 1800
  },
  {
   "kind": "status",
   "payload": {
    "status": "verifying",
-   "detail": "kane-cli run --agent --url http://localhost:4000 --timeout 300 \"Click the Name field and type Ada. Click the Email field and type not-an-email. Click the Sign Up button. Verify that the error message asking for a valid email address is visible and the success message is not visible. Then click the Email field, clear it, and type ada@example.com into the Email field. Click the Sign Up button. Verify that the success message about the account being created is visible.\""
+   "detail": "kane-cli run --agent --url http://localhost:4000 --timeout 300 \"Click the password field and type abc1. Click the Sign Up button and verify that the error message 'Password must be at least 8 characters long and contain at least one digit.' is visible and no 'Account created' message is shown. Then click the password field and type valid123, click the Sign Up button, and verify that the success message starting with 'Account created' is visible.\""
   },
-  "delayMs": 2200
+  "delayMs": 1800
  },
  {
   "kind": "kane_result",
   "payload": {
-   "flowDescription": "Click the Name field and type Ada. Click the Email field and type not-an-email. Click the Sign Up button. Verify that the error message asking for a valid email address is visible and the success message is not visible. Then click the Email field, clear it, and type ada@example.com into the Email field. Click the Sign Up button. Verify that the success message about the account being created is visible.",
+   "flowDescription": "Click the password field and type abc1. Click the Sign Up button and verify that the error message 'Password must be at least 8 characters long and contain at least one digit.' is visible and no 'Account created' message is shown. Then click the password field and type valid123, click the Sign Up button, and verify that the success message starting with 'Account created' is visible.",
+   "passed": false,
+   "reason": "The browser session got stuck while taking a screenshot after the page loaded, so the test ended before any sign-up validation could be exercised.",
+   "testUrl": "https://test-manager.lambdatest.com/projects/01M13BY877W2766TPKABHAJC36/test-cases/01M161C231JY0RHHHHYPPBPCY2/dashboard/share/US_929NCT5D0A0HC2X7403KJ6B4QVGHQEPNEZDMROAU37Y34X8DFQ7B8OYH2G7VDPCC?type=summary&agentView=true&fqdn=summary-page",
+   "evidenceDir": "C:\\Users\\M S I/.testmuai/kaneai/sessions\\f12f0aa4-66a6-41a5-ad57-1a07bb711f96",
+   "durationSec": 79.5,
+   "credits": 2.842565,
+   "timestamp": "2026-08-29T05:57:03.100Z"
+  },
+  "delayMs": 4500
+ },
+ {
+  "kind": "status",
+  "payload": {
+   "status": "verifying",
+   "detail": "kane-cli run --agent --url http://localhost:4000 --timeout 300 \"Click the password field and type abc1. Click the Sign Up button and verify the password error message is visible. Then click the password field and type valid123, click the Sign Up button, and verify the 'Account created' success message is visible.\""
+  },
+  "delayMs": 1800
+ },
+ {
+  "kind": "kane_result",
+  "payload": {
+   "flowDescription": "Click the password field and type abc1. Click the Sign Up button and verify the password error message is visible. Then click the password field and type valid123, click the Sign Up button, and verify the 'Account created' success message is visible.",
    "passed": true,
-   "reason": "completed sign-up form submission on localhost",
-   "testUrl": "https://test-manager.lambdatest.com/projects/01M13BY877W2766TPKABHAJC36/test-cases/01M1608PNRKNAW6ERQC18K4V6Q/dashboard/share/US_5XC9T679Z0RPAFN5G4EKJ5HLKA4R18M1E5VXAMTCS75FDS1IFIWZ18JASTGGZS1I?type=summary&agentView=true&fqdn=summary-page",
-   "evidenceDir": "C:\\Users\\M S I/.testmuai/kaneai/sessions\\c674342b-0140-4d35-ab75-37f159deac37",
-   "durationSec": 73,
-   "credits": 23.506099999999993,
-   "timestamp": "2026-08-29T05:37:24.865Z"
+   "reason": "tested sign-up flow on localhost",
+   "testUrl": "https://test-manager.lambdatest.com/projects/01M13BY877W2766TPKABHAJC36/test-cases/01M161G3REKYGB2Q721AF4ZD2J/dashboard/share/US_BCAGIW6VSSURTFVUMOB3GVGJH11NT5UCZRGOZ4LXDIWHCA2WTPEU8L7TC1PUGP6Z?type=summary&agentView=true&fqdn=summary-page",
+   "evidenceDir": "C:\\Users\\M S I/.testmuai/kaneai/sessions\\42bf49d6-cb8e-4f95-bc1f-913d774c3f34",
+   "durationSec": 50.2,
+   "credits": 18.45517,
+   "timestamp": "2026-08-29T05:58:40.455Z"
   },
   "delayMs": 4500
  },
@@ -55,17 +77,17 @@
   "payload": {
    "status": "verified"
   },
-  "delayMs": 700
+  "delayMs": 600
  },
  {
   "kind": "run_complete",
   "payload": {
    "finalStatus": "verified",
-   "attempts": 1,
+   "attempts": 2,
    "reason": "agent session ended (exit 0)",
-   "numTurns": 9,
+   "numTurns": 11,
    "isError": false
   },
-  "delayMs": 2200
+  "delayMs": 1800
  }
 ]

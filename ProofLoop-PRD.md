@@ -80,7 +80,7 @@ Backend server (Express + TypeScript, port 3001)
      |    opsi spawn: { cwd: <absolute-path>/target-app }
      |    prompt (wrapper §14.4) dikirim via STDIN, bukan argumen
      |    env tambahan: KANE_CLI_USER_AGENT=claude-code
-     |    watchdog: kill tree jika > 10 menit
+     |    watchdog: kill tree jika > 20 menit
      v
 Claude Code (headless subprocess)
      |  membaca & mengedit file di /target-app (dibimbing CLAUDE.md target-app)
@@ -155,7 +155,7 @@ Flag `DEMO_MODE=1`: backend me-replay transkrip run asli (fixture) melewati pipe
 | FR-10 | `GET /api/history` mengembalikan riwayat run |
 | FR-11 | Run baru ditolak (HTTP 409) selama run lain masih berjalan |
 | FR-12 | Sinal terminal ganda: event `type:"result"` dari stream-json (memuat `is_error`, `num_turns`) **dan** exit code proses → keduanya memicu `run_complete` (idempotent) |
-| FR-13 | Watchdog wall-clock (default 10 menit): jika run belum selesai, **kill seluruh process tree** (di Windows: `taskkill /PID <pid> /T /F`) → status `failed` dengan alasan "watchdog timeout" — jangan biarkan proses claude/kane menggantung selamanya |
+| FR-13 | Watchdog wall-clock (default 20 menit, dinaikkan dari 10 setelah E2E: satu run kane nyata bisa 200s+, jadi 3 attempt + build/fix butuh ruang): jika run belum selesai, **kill seluruh process tree** (di Windows: `taskkill /PID <pid> /T /F`) → status `failed` dengan alasan "watchdog timeout" — jangan biarkan proses claude/kane menggantung selamanya |
 | FR-14 | Prompt wrapper membatasi **maksimal 3 percobaan verifikasi Kane** per run; jika tercapai tanpa pass, run berakhir `failed` (melindungi kredit Kane ~20/run) |
 | FR-15 | Link bukti (FR-6) tampil di Kane Log Panel dan tersimpan di history |
 | FR-16 | Proses `claude` yang exit dengan error (budget habis, API error) dilaporkan sebagai status `failed` + pesan ke UI, bukan diam |
