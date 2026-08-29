@@ -1,0 +1,51 @@
+[
+  { "kind": "status", "payload": { "status": "building", "detail": "Starting agent session (claude -p)" }, "delayMs": 300 },
+  { "kind": "status", "payload": { "status": "building" }, "delayMs": 1200 },
+  { "kind": "status", "payload": { "status": "building" }, "delayMs": 1200 },
+  {
+    "kind": "status",
+    "payload": {
+      "status": "verifying",
+      "detail": "kane-cli run --agent --url http://localhost:4000 --timeout 300 \"Fill the signup form with the invalid email 'not-an-email' and verify that a visible error message rejects it, then submit again with a valid email and verify the success message appears.\""
+    },
+    "delayMs": 2600
+  },
+  {
+    "kind": "kane_result",
+    "payload": {
+      "flowDescription": "Fill the signup form with the invalid email 'not-an-email' and verify that a visible error message rejects it, then submit again with a valid email and verify the success message appears.",
+      "passed": false,
+      "reason": "the form accepted the invalid email without showing any error message",
+      "durationSec": 47.3,
+      "credits": 9.8,
+      "testUrl": "https://test-manager.lambdatest.com/projects/01M13BY877W2766TPKABHAJC36/test-cases/DEMO/dashboard/share/DEMO",
+      "evidenceDir": "~/.testmuai/kaneai/sessions/demo-run"
+    },
+    "delayMs": 4200
+  },
+  { "kind": "status", "payload": { "status": "fixing" }, "delayMs": 1500 },
+  { "kind": "status", "payload": { "status": "fixing" }, "delayMs": 1200 },
+  {
+    "kind": "status",
+    "payload": {
+      "status": "verifying",
+      "detail": "kane-cli run --agent --url http://localhost:4000 --timeout 300 \"Fill the signup form with the invalid email 'not-an-email' and verify that a visible error message rejects it, then submit again with a valid email and verify the success message appears.\" (retry)"
+    },
+    "delayMs": 2400
+  },
+  {
+    "kind": "kane_result",
+    "payload": {
+      "flowDescription": "Fill the signup form with the invalid email 'not-an-email' and verify that a visible error message rejects it, then submit again with a valid email and verify the success message appears.",
+      "passed": true,
+      "reason": "invalid email rejected with a visible error, valid email accepted",
+      "durationSec": 52.1,
+      "credits": 10.4,
+      "testUrl": "https://test-manager.lambdatest.com/projects/01M13BY877W2766TPKABHAJC36/test-cases/DEMO-PASS/dashboard/share/DEMO-PASS",
+      "evidenceDir": "~/.testmuai/kaneai/sessions/demo-run-pass"
+    },
+    "delayMs": 4800
+  },
+  { "kind": "status", "payload": { "status": "verified" }, "delayMs": 500 },
+  { "kind": "run_complete", "payload": { "finalStatus": "verified", "attempts": 2, "numTurns": 12, "isError": false, "reason": "agent session ended (exit 0)" }, "delayMs": 600 }
+]
