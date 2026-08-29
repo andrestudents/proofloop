@@ -1,0 +1,18 @@
+# deps & build output
+node_modules/
+dist/
+frontend-dist/
+coverage/
+
+# environment & secrets
+.env
+.env.*
+.testmuai/variables/
+
+# logs & OS noise
+*.log
+.DS_Store
+Thumbs.db
+
+# proofloop runtime artifacts (transcripts are copied to fixtures/ deliberately)
+proofloop/runs/
