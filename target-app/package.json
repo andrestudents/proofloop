@@ -1,0 +1,13 @@
+{
+  "name": "proofloop-target-app",
+  "version": "1.0.0",
+  "private": true,
+  "description": "The app that ProofLoop's agent edits and Kane CLI verifies",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

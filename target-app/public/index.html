@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Signup — Target App</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="card">
+    <h1>Create your account</h1>
+    <p class="subtitle">Sign up to get started.</p>
+
+    <form id="signup-form" novalidate>
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" placeholder="Your name" />
+
+      <label for="email">Email</label>
+      <input type="text" id="email" name="email" placeholder="you@example.com" />
+
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" placeholder="••••••••" />
+
+      <button type="submit" id="signup-button">Sign Up</button>
+    </form>
+
+    <div id="message" class="message" role="status" aria-live="polite"></div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
