@@ -9,12 +9,12 @@ import {
   type Phase,
   type RunComplete,
 } from "./api.js";
-import ActivityFeed, { type ActivityItem } from "./components/ActivityFeed.js";
-import HistoryList from "./components/HistoryList.js";
-import KaneLog from "./components/KaneLog.js";
-import PromptForm from "./components/PromptForm.js";
-import StatusStepper from "./components/StatusStepper.js";
-import TargetPreview from "./components/TargetPreview.js";
+import CaseIndex from "./components/CaseIndex.js";
+import EvidenceLog from "./components/EvidenceLog.js";
+import LoopTrace from "./components/LoopTrace.js";
+import RequestForm from "./components/RequestForm.js";
+import Specimen from "./components/Specimen.js";
+import Transcript, { type TranscriptItem } from "./components/Transcript.js";
 import { STATUS_META } from "./statusMeta.js";
 
 function timestamp(): string {
@@ -25,25 +25,30 @@ export default function App() {
   const [phase, setPhase] = useState<Phase>("idle");
   const [detail, setDetail] = useState<string>("");
   const [kaneEntries, setKaneEntries] = useState<KaneEntry[]>([]);
-  const [activity, setActivity] = useState<ActivityItem[]>([]);
+  const [transcript, setTranscript] = useState<TranscriptItem[]>([]);
   const [runComplete, setRunComplete] = useState<RunComplete | null>(null);
   const [history, setHistory] = useState<HistoryRun[]>([]);
   const [demo, setDemo] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [caseTag, setCaseTag] = useState<string>("—");
   const [previewKey, setPreviewKey] = useState(0);
   const closeRef = useRef<(() => void) | null>(null);
 
-  const pushActivity = useCallback((text: string, phase: Phase) => {
-    setActivity((prev) => [...prev, { at: timestamp(), text, phase }]);
+  const pushTranscript = useCallback((text: string, phase: Phase) => {
+    setTranscript((prev) => [...prev, { at: timestamp(), text, phase }]);
   }, []);
 
   const loadHistory = useCallback(() => {
-    fetchHistory().then(setHistory).catch(() => undefined);
+    fetchHistory()
+      .then(setHistory)
+      .catch(() => undefined);
   }, []);
 
   useEffect(() => {
-    fetchHealth().then((h) => setDemo(h.demo)).catch(() => undefined);
+    fetchHealth()
+      .then((h) => setDemo(h.demo))
+      .catch(() => undefined);
     loadHistory();
     return () => closeRef.current?.();
   }, [loadHistory]);
@@ -55,26 +60,27 @@ export default function App() {
       setPhase("building");
       setDetail("");
       setKaneEntries([]);
-      setActivity([]);
+      setTranscript([]);
       setRunComplete(null);
-      pushActivity(`prompt accepted: "${prompt}"`, "building");
+      pushTranscript(`request filed: "${prompt}"`, "building");
       try {
         const { runId, demo: isDemo } = await startRun(prompt);
-        if (isDemo) pushActivity("DEMO_MODE: replaying a recorded real run", "building");
+        setCaseTag(runId.slice(0, 8).toUpperCase());
+        if (isDemo) pushTranscript("replay: recorded from a real run, no agent active", "building");
         closeRef.current?.();
         closeRef.current = openStream(runId, {
           onStatus: (p) => {
             setPhase(p.status);
             setDetail(p.detail ?? "");
-            if (p.detail) pushActivity(p.detail, p.status);
-            else pushActivity(`→ ${STATUS_META[p.status]?.label ?? p.status}`, p.status);
+            if (p.detail) pushTranscript(p.detail, p.status);
+            else pushTranscript(`→ ${STATUS_META[p.status]?.label ?? p.status}`, p.status);
           },
           onKaneResult: (entry) => {
             setKaneEntries((prev) => [...prev, entry]);
-            pushActivity(
+            pushTranscript(
               entry.passed
                 ? `kane PASSED — ${entry.reason ?? "verified"}`
-                : `kane FAILED — ${entry.reason ?? "see log"}`,
+                : `kane FAILED — ${entry.reason ?? "see evidence"}`,
               entry.passed ? "verified" : "fixing",
             );
           },
@@ -82,12 +88,12 @@ export default function App() {
             setRunComplete(c);
             setPhase(c.finalStatus);
             setBusy(false);
-            pushActivity(
-              `run complete: ${STATUS_META[c.finalStatus]?.label ?? c.finalStatus}` +
+            pushTranscript(
+              `case closed: ${STATUS_META[c.finalStatus]?.label ?? c.finalStatus}` +
                 (c.reason ? ` (${c.reason})` : ""),
               c.finalStatus,
             );
-            // finished a build → reload the target app preview
+            // a build finished — reload the specimen
             setPreviewKey((k) => k + 1);
             loadHistory();
           },
@@ -98,67 +104,76 @@ export default function App() {
         setPhase("idle");
       }
     },
-    [loadHistory, pushActivity],
+    [loadHistory, pushTranscript],
   );
 
   return (
-    <div className="mx-auto flex min-h-screen max-w-6xl flex-col gap-4 px-4 py-6">
-      <header className="flex flex-wrap items-end justify-between gap-2">
-        <div>
-          <h1 className="text-xl font-bold tracking-tight text-slate-100">
-            ProofLoop <span className="text-sky-400">🔁</span>
-          </h1>
-          <p className="text-xs text-slate-500">
-            An agent builds the feature, then proves it in a real browser with Kane CLI — and fixes it until it passes.
-          </p>
+    <div className="layout">
+      <header className="masthead">
+        <div className="masthead-left">
+          <div className="mark" aria-hidden="true">
+            ↻
+          </div>
+          <div>
+            <div className="wordmark">PROOFLOOP</div>
+            <div className="tagline">dossier · autonomous build-verify session</div>
+          </div>
         </div>
-        {demo && (
-          <span className="rounded-full border border-amber-400/40 bg-amber-400/10 px-3 py-1 text-[11px] font-medium text-amber-300">
-            DEMO_MODE — replaying recorded runs
-          </span>
-        )}
+        <div className="masthead-right">
+          <span className="case-tag">CASE {caseTag}</span>
+        </div>
       </header>
 
-      {error && (
-        <div className="rounded-lg border border-rose-500/40 bg-rose-500/10 px-3 py-2 text-xs text-rose-300">{error}</div>
+      {error && <div className="error-strip">{error}</div>}
+      {demo && (
+        <div className="demo-strip">
+          REPLAY MODE — this is a recorded real run. No agent is active; evidence links resolve to
+          the actual Kane dashboard.
+        </div>
       )}
 
-      <div className="grid gap-4 lg:grid-cols-[1fr_1fr]">
-        <div className="flex flex-col gap-4">
-          <PromptForm busy={busy} onSubmit={handleSubmit} />
-          <StatusStepper phase={phase} attempts={kaneEntries.length} />
-          <ActivityFeed items={activity} />
-          {runComplete && (
-            <div
-              className={`rounded-xl border px-4 py-3 text-xs leading-relaxed ${
-                runComplete.finalStatus === "verified"
-                  ? "border-emerald-400/40 bg-emerald-400/10 text-emerald-200"
-                  : runComplete.finalStatus === "failed"
-                    ? "border-rose-500/40 bg-rose-500/10 text-rose-200"
-                    : "border-[#2a3448] bg-[#131a2a] text-slate-300"
-              }`}
-            >
-              <p className="font-semibold">
-                {runComplete.finalStatus === "verified" ? "✓ Feature shipped and verified" : `Run ended: ${runComplete.finalStatus}`}
-              </p>
-              <p className="mt-1 text-slate-400">
-                {runComplete.attempts} kane attempt{runComplete.attempts === 1 ? "" : "s"}
-                {runComplete.numTurns !== undefined && ` · ${runComplete.numTurns} agent turns`}
-                {runComplete.reason && ` · ${runComplete.reason}`}
-              </p>
-            </div>
-          )}
-          <KaneLog entries={kaneEntries} />
+      <section className="panel" aria-label="Loop status">
+        <div className="stamp">
+          <span className="stamp-word">THE LOOP</span>
+          <span className="stamp-note">
+            {STATUS_META[phase].hint}
+          </span>
         </div>
+        <div className="loop-stage">
+          <LoopTrace phase={phase} kaneEntries={kaneEntries} />
+        </div>
+        {runComplete && (
+          <p className="loop-outcome on">
+            {runComplete.finalStatus === "verified" ? (
+              <span className="ok">case closed — verified</span>
+            ) : (
+              <span className="bad">case closed — {runComplete.finalStatus}</span>
+            )}
+            <span className="dim">
+              {" "}
+              · {runComplete.attempts} kane attempt{runComplete.attempts === 1 ? "" : "s"}
+              {runComplete.numTurns !== undefined && ` · ${runComplete.numTurns} agent turns`}
+              {runComplete.reason && ` · ${runComplete.reason}`}
+            </span>
+          </p>
+        )}
+      </section>
 
-        <div className="flex flex-col gap-4">
-          <TargetPreview refreshKey={previewKey} live={!demo} />
-          <HistoryList runs={history} />
+      <div className="cols">
+        <div className="col">
+          <RequestForm busy={busy} onSubmit={handleSubmit} />
+          <Transcript items={transcript} />
+          <CaseIndex runs={history} />
+        </div>
+        <div className="col">
+          <EvidenceLog entries={kaneEntries} />
+          <Specimen refreshKey={previewKey} live={!demo} />
         </div>
       </div>
 
-      <footer className="mt-2 border-t border-[#1c2540] pt-3 text-[11px] text-slate-600">
-        Backend <code>:3001</code> · target app <code>:4000</code> · {detail ? `current: ${detail}` : "evidence: every kane run links to its dashboard trace"}
+      <footer className="foot">
+        <span>backend :3001 · specimen :4000</span>
+        <span>{detail ? "live: " + detail.slice(0, 90) : "states derive from the agent's own tool stream"}</span>
       </footer>
     </div>
   );

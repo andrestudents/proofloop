@@ -2,53 +2,38 @@ import type { Phase } from "./api.js";
 
 export interface StatusMeta {
   label: string;
-  dot: string; // tailwind bg class for the status dot
-  text: string;
+  /** one-line explanation of what this state means, in the interface's voice */
   hint: string;
 }
 
 export const STATUS_META: Record<Phase, StatusMeta> = {
   idle: {
     label: "Idle",
-    dot: "bg-slate-500",
-    text: "text-slate-400",
-    hint: "Type a feature request to start the loop.",
+    hint: "Describe a feature below to open a case.",
   },
   building: {
     label: "Building",
-    dot: "bg-sky-400",
-    text: "text-sky-300",
     hint: "The agent is reading and editing the target app.",
   },
   verifying: {
     label: "Verifying",
-    dot: "bg-amber-400",
-    text: "text-amber-300",
-    hint: "Kane CLI is driving a real browser against the app.",
+    hint: "Kane is driving a real browser against the app.",
   },
   fixing: {
     label: "Fixing",
-    dot: "bg-violet-400",
-    text: "text-violet-300",
-    hint: "Kane found a failure — the agent is repairing it.",
+    hint: "A check failed. The agent is repairing it, then verifies again.",
   },
   verified: {
     label: "Verified",
-    dot: "bg-emerald-400",
-    text: "text-emerald-300",
-    hint: "Kane confirmed the feature works in a real browser.",
+    hint: "Kane confirmed the feature in a real browser. Evidence on record.",
   },
   failed: {
     label: "Failed",
-    dot: "bg-rose-500",
-    text: "text-rose-300",
     hint: "The run ended without a passing verification.",
   },
   unverified: {
     label: "Unverified",
-    dot: "bg-slate-400",
-    text: "text-slate-300",
-    hint: "The agent finished but never verified with Kane.",
+    hint: "The agent finished but never ran a Kane check.",
   },
 };
 
@@ -64,3 +49,5 @@ export function fmtTime(iso: string): string {
     return iso;
   }
 }
+
+export const EXHIBIT_LETTERS = ["A", "B", "C", "D", "E", "F"];

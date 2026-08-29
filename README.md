@@ -110,9 +110,9 @@ Every rule in `target-app/CLAUDE.md` was earned empirically. Two examples:
 | Judge criterion | Where ProofLoop shows it |
 |---|---|
 | Ships | `npm start` → app works end-to-end locally |
-| Verified | Kane Run Log panel with clickable `test_url` + evidence dir per attempt |
-| Closed loop | Live `failed → agent fixes → verified` moment in one `claude -p` session |
-| Craft | Real-time loop visualization; backend is a passive listener — no faked statuses |
+| Verified | Evidence panel: every Kane attempt filed as an exhibit with verdict stamp, clickable `test_url`, and evidence dir |
+| Closed loop | The loop circuit at the top of the UI — the FAIL return path lights up and the agent travels it live |
+| Craft | Verification-dossier UI (state colors are data, not decoration); backend is a passive listener — no faked statuses |
 
 ## Demo video storyboard (~90s)
 
@@ -120,12 +120,12 @@ Every rule in `target-app/CLAUDE.md` was earned empirically. Two examples:
 2. **0:10–0:20** — Open http://localhost:3001. Type "add email validation to the signup form". Hit Generate.
 3. **0:20–0:40** — UI goes BUILDING: the agent's live activity streams in (Read/Edit tool calls
    rendered as human-readable narration). Target-app panel shows the untouched form.
-4. **0:40–0:50** — Status flips VERIFYING: the stepper highlights, and the Kane objective the agent
-   wrote is shown verbatim — the agent decided to call Kane itself.
-5. **0:50–1:10** — Kane result card lands: PASS pill, duration, credits, and a **clickable link to
-   the real Kane dashboard run** (browser automation trace in actual Chrome).
-6. **1:10–1:30** — VERIFIED. Target-app iframe auto-refreshes: submit an invalid email live, error
-   message appears. Close on the Kane Run Log: evidence for every attempt, zero human intervention.
+4. **0:40–0:50** — Status flips VERIFYING: the loop circuit's amber segment starts marching, and the
+   Kane objective the agent wrote is shown verbatim — the agent decided to call Kane itself.
+5. **0:50–1:10** — An exhibit lands in the Evidence panel: verdict stamp, duration, credits, and a
+   **clickable link to the real Kane dashboard run** (browser automation trace in actual Chrome).
+6. **1:10–1:30** — VERIFIED. The specimen frame auto-reloads: submit an invalid email live, error
+   message appears. Close on the Evidence panel: exhibits for every attempt, zero human intervention.
 
 (The fix-loop moment — FAIL → agent fixes → PASS — is shown either live or via the
 `DEMO_TRANSCRIPT=fixtures/demo-transcript.json` replay if the live run passes first try.)
