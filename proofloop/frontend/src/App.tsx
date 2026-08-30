@@ -128,7 +128,8 @@ export default function App() {
       {demo && (
         <div className="demo-strip">
           REPLAY MODE — this is a recorded real run. No agent is active; evidence links resolve to
-          the actual Kane dashboard, and the specimen shows the app as that run left it.
+          the actual Kane dashboard, and the specimen shows the app in its committed before-state —
+          the run's changes only land when you file the request live.
         </div>
       )}
 
