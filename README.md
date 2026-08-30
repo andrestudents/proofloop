@@ -136,12 +136,15 @@ Every rule in `target-app/CLAUDE.md` was earned empirically. Two examples:
 ## Submission paragraph
 
 > ProofLoop is a live window into an agent's build-verify loop. Type a feature request in plain
-> English; a headless Claude Code session implements it in a small target app, then calls Kane CLI
-> itself to verify the change in a real browser — reading Kane's NDJSON result, fixing what failed,
-> and re-verifying, all in one autonomous session. ProofLoop's backend never calls Kane: it only
-> translates the agent's own tool stream into a real-time status UI, with clickable Kane evidence
-> (dashboard run URL + evidence pack) for every verification. Built with Claude Code; verified with
-> Kane CLI; ships with a one-command local setup and an honest hosted replay fallback.
+> English; a headless Claude Code session (the coding agent) implements it in a small target web
+> app, then calls Kane CLI itself to verify the change in a real browser — Kane drives actual
+> Chrome through the app and asserts the new behavior really works (e.g. invalid input is
+> rejected with a visible error, valid input is accepted). If the verdict is FAIL, the agent
+> reads Kane's NDJSON result, fixes the code, and re-verifies, all in one autonomous session.
+> ProofLoop's backend never calls Kane: it only translates the agent's own tool stream into a
+> real-time status UI, filing every attempt as an evidence exhibit with a clickable link to the
+> live Kane dashboard run. Built with Claude Code; verified with Kane CLI; ships with a
+> one-command local setup and a zero-credential demo replay.
 
 ---
 
