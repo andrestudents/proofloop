@@ -47,8 +47,9 @@ DEMO_MODE=1 npm start                      # bash
 $env:DEMO_MODE="1"; npm start              # PowerShell (Windows)
 ```
 
-Replays a recorded **real** run through the same UI (banner shown). Other transcripts:
-see [Demo replay sources](#demo-replay-sources).
+Replays a recorded **real** run through the same UI (banner shown) — and the target app is
+served too, so the specimen frame is live: after the replay verifies, submit an invalid
+password in it yourself. Other transcripts: see [Demo replay sources](#demo-replay-sources).
 
 ## Repo layout
 
