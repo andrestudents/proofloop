@@ -84,13 +84,14 @@ app.use(express.static(FRONTEND_DIST));
 const boot = async (): Promise<void> => {
   if (DEMO_MODE) {
     console.log("[proofloop] DEMO_MODE=1 — replay only, no agent will be spawned");
-  } else {
-    try {
-      await ensureTargetApp();
-    } catch (err) {
-      console.error(`[proofloop] ${(err as Error).message}`);
-      process.exit(1);
-    }
+  }
+  // The target-app is served in demo mode too: the committed target-app IS the
+  // end state of the recorded run, so the specimen can show the real artifact.
+  try {
+    await ensureTargetApp();
+  } catch (err) {
+    console.error(`[proofloop] ${(err as Error).message}`);
+    process.exit(1);
   }
   app.listen(PORT, () => {
     console.log(

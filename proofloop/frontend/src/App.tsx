@@ -128,7 +128,7 @@ export default function App() {
       {demo && (
         <div className="demo-strip">
           REPLAY MODE — this is a recorded real run. No agent is active; evidence links resolve to
-          the actual Kane dashboard.
+          the actual Kane dashboard, and the specimen shows the app as that run left it.
         </div>
       )}
 
@@ -167,7 +167,7 @@ export default function App() {
         </div>
         <div className="col">
           <EvidenceLog entries={kaneEntries} />
-          <Specimen refreshKey={previewKey} live={!demo} />
+          <Specimen refreshKey={previewKey} />
         </div>
       </div>
 

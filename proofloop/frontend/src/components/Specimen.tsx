@@ -4,9 +4,10 @@ const TARGET_URL = "http://localhost:4000";
 
 /**
  * The app under test, presented as a specimen: a browser frame with the
- * real URL, reloaded whenever a run finishes verifying.
+ * real URL, reloaded whenever a run finishes verifying. Served in demo mode
+ * too — the committed target-app is the end state of the recorded run.
  */
-export default function Specimen({ refreshKey, live }: { refreshKey: number; live: boolean }) {
+export default function Specimen({ refreshKey }: { refreshKey: number }) {
   const [manualKey, setManualKey] = useState(0);
 
   return (
@@ -23,21 +24,11 @@ export default function Specimen({ refreshKey, live }: { refreshKey: number; liv
         </button>
       </div>
       <div className="specimen-body">
-        {live ? (
-          <iframe
-            key={`${refreshKey}-${manualKey}`}
-            src={`${TARGET_URL}/?t=${refreshKey}-${manualKey}`}
-            title="Target app under test"
-          />
-        ) : (
-          <div className="specimen-placeholder">
-            <span className="glyph">[ ]</span>
-            <p>
-              Replay mode shows a recorded run, so no app is served. Start ProofLoop without
-              DEMO_MODE and the live target app appears here on <code>localhost:4000</code>.
-            </p>
-          </div>
-        )}
+        <iframe
+          key={`${refreshKey}-${manualKey}`}
+          src={`${TARGET_URL}/?t=${refreshKey}-${manualKey}`}
+          title="Target app under test"
+        />
       </div>
     </section>
   );
