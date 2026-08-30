@@ -1,6 +1,7 @@
 import express from "express";
 import { DEMO_MODE, FRONTEND_DIST, PORT } from "./config.js";
 import { createReplayRun, getRun, listRuns, startRun, subscribe } from "./runManager.js";
+import { agentAuthSummary } from "./projectEnv.js";
 import { ensureTargetApp } from "./targetApp.js";
 import type { RunEvent } from "./types.js";
 
@@ -97,6 +98,7 @@ const boot = async (): Promise<void> => {
     console.log(
       `[proofloop] ${DEMO_MODE ? "(demo mode) " : ""}listening on http://localhost:${PORT}`,
     );
+    if (!DEMO_MODE) console.log(`[proofloop] agent auth: ${agentAuthSummary()}`);
   });
 };
 

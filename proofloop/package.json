@@ -4,12 +4,14 @@
   "private": true,
   "description": "Live window into an agent build-verify loop (Claude Code + Kane CLI)",
   "type": "module",
-  "engines": { "node": ">=20" },
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "start": "node dist/server.js",
     "dev": "tsx watch src/server.ts",
-    "test": "tsx --test tests/kaneParser.test.ts tests/agentStream.test.ts tests/runManager.test.ts"
+    "test": "tsx --test tests/kaneParser.test.ts tests/agentStream.test.ts tests/runManager.test.ts tests/projectEnv.test.ts"
   },
   "dependencies": {
     "express": "^4.19.2"

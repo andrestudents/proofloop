@@ -5,6 +5,7 @@ import path from "node:path";
 import { RunReducer, type AgentEvent } from "./agentStream.js";
 import { CLAUDE_ARGS, claudeSpawn, killTree } from "./claudeCommand.js";
 import { DEMO_TRANSCRIPT, RUNS_DIR, TARGET_APP_DIR, WATCHDOG_MS } from "./config.js";
+import { projectAgentEnv } from "./projectEnv.js";
 import { buildPromptWrapper } from "./promptWrapper.js";
 import type { ClaudeStreamEvent, RunEvent, RunEventKind, RunRecord } from "./types.js";
 
@@ -74,7 +75,9 @@ export function startRun(prompt: string): string {
       cwd: TARGET_APP_DIR,
       shell,
       detached,
-      env: { ...process.env, KANE_CLI_USER_AGENT: "claude-code" },
+      // Project env last: the agent must run on this repo's pinned auth/model even
+      // if the server was launched from a terminal with a stale environment.
+      env: { ...process.env, KANE_CLI_USER_AGENT: "claude-code", ...projectAgentEnv() },
       stdio: ["pipe", "pipe", "pipe"],
     });
   } catch (err) {
