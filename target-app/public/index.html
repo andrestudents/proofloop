@@ -3,28 +3,43 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Signup — Target App</title>
+  <title>Registry of Accounts — Signup</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <main class="card">
+    <header class="letterhead">
+      <span class="hole" aria-hidden="true"></span>
+      <span class="office">Registry of Accounts</span>
+      <span class="form-code">Form 7-A</span>
+    </header>
+
     <h1>Create your account</h1>
     <p class="subtitle">Sign up to get started.</p>
 
     <form id="signup-form" novalidate>
-      <label for="name">Name</label>
-      <input type="text" id="name" name="name" placeholder="Your name" />
+      <div class="entry">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" placeholder="Your name" autocomplete="name" />
+      </div>
 
-      <label for="email">Email</label>
-      <input type="text" id="email" name="email" placeholder="you@example.com" />
+      <div class="entry">
+        <label for="email">Email</label>
+        <input type="text" id="email" name="email" placeholder="you@example.com" autocomplete="email" />
+      </div>
 
-      <label for="password">Password</label>
-      <input type="password" id="password" name="password" placeholder="••••••••" />
+      <div class="entry">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="••••••••" autocomplete="new-password" />
+      </div>
 
       <button type="submit" id="signup-button">Sign Up</button>
     </form>
 
-    <div id="message" class="message" role="status" aria-live="polite"></div>
+    <div class="result-slot">
+      <span class="slot-label">Result</span>
+      <div id="message" class="message" role="status" aria-live="polite"></div>
+    </div>
   </main>
 
   <script src="app.js"></script>

@@ -1,12 +1,21 @@
+/* ————————————————————————————————————————————————
+   Intake Form 7-A — the specimen's own paperwork.
+   One idea: a registry slip on a dark desk. Everything is typed
+   (monospace), fields are ruled ledger lines, and the submit result
+   is stamped in oxblood ink — the line Kane reads and the judges watch.
+   ———————————————————————————————————————————————— */
+
 :root {
-  --bg: #0f1420;
-  --card: #171e2e;
-  --border: #2a3448;
-  --text: #e7ecf5;
-  --muted: #93a0b8;
-  --accent: #5b8cff;
-  --accent-dark: #3f6ee0;
-  --success: #2ecc8f;
+  --desk: #14181d;      /* the examination screen it lives on */
+  --paper: #eae6d6;     /* aged index card */
+  --paper-hi: #f0ecdf;  /* top light on the paper */
+  --paper-lo: #e3decc;
+  --edge: #d9d3bf;      /* card edge */
+  --ink: #26241e;       /* typewriter ink */
+  --ink-soft: #6e695d;  /* faded ribbon */
+  --faint: #b0a98f;     /* placeholder, empty state */
+  --rule: #c6bfab;      /* ledger lines */
+  --stamp: #9e2b25;     /* oxblood — the only accent */
 }
 
 * { box-sizing: border-box; }
@@ -17,75 +26,217 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  background: var(--bg);
-  color: var(--text);
+  padding: 28px 16px;
+  font-family: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, "Courier New", monospace;
+  background:
+    radial-gradient(85% 60% at 50% 36%, #1b212a 0%, var(--desk) 58%, #101317 100%);
+  color: var(--ink);
 }
+
+/* ——— the slip ——— */
 
 .card {
   width: 100%;
-  max-width: 380px;
-  margin: 24px;
-  padding: 32px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 14px;
+  max-width: 400px;
+  padding: 26px 28px 24px;
+  color-scheme: light;
+  background: linear-gradient(180deg, var(--paper-hi) 0%, var(--paper) 55%, var(--paper-lo) 100%);
+  border: 1px solid var(--edge);
+  border-radius: 3px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    0 2px 6px rgba(0, 0, 0, 0.3),
+    0 22px 44px -18px rgba(0, 0, 0, 0.55);
 }
 
+/* ——— letterhead ——— */
+
+.letterhead {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--ink);
+  margin-bottom: 18px;
+}
+
+.hole {
+  width: 13px;
+  height: 13px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--desk);
+  box-shadow:
+    inset 0 1.5px 3px rgba(0, 0, 0, 0.55),
+    0 0 0 3px rgba(0, 0, 0, 0.05);
+}
+
+.office {
+  flex: 1;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.form-code {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* ——— heading ——— */
+
 h1 {
-  margin: 0 0 6px;
-  font-size: 22px;
+  margin: 0 0 4px;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
 }
 
 .subtitle {
-  margin: 0 0 22px;
-  color: var(--muted);
-  font-size: 14px;
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--ink-soft);
 }
 
-form {
-  display: flex;
-  flex-direction: column;
+/* ——— entries as ruled ledger lines ——— */
+
+.entry {
+  display: grid;
+  grid-template-columns: 88px 1fr;
+  align-items: end;
+  margin-top: 18px;
 }
 
-label {
-  margin: 10px 0 4px;
-  font-size: 13px;
-  color: var(--muted);
+.entry label {
+  padding-bottom: 8px;
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
 }
 
-input {
-  padding: 10px 12px;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  background: #101625;
-  color: var(--text);
-  font-size: 14px;
+.entry input {
+  width: 100%;
+  padding: 6px 2px 7px;
+  font: inherit;
+  font-size: 15px;
+  color: var(--ink);
+  caret-color: var(--stamp);
+  background: transparent;
+  border: 0;
+  border-bottom: 1.5px solid var(--rule);
+  border-radius: 0;
 }
 
-input:focus {
-  outline: 2px solid var(--accent);
-  outline-offset: 1px;
+.entry input::placeholder { color: var(--faint); }
+
+.entry input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 40px var(--paper) inset;
+  -webkit-text-fill-color: var(--ink);
 }
+
+.entry input:focus {
+  outline: none;
+  border-bottom-color: var(--stamp);
+  background: rgba(158, 43, 37, 0.045);
+}
+
+/* ——— the file-it button: an ink bar ——— */
 
 button {
-  margin-top: 20px;
-  padding: 11px;
-  border: none;
-  border-radius: 8px;
-  background: var(--accent);
-  color: white;
+  width: 100%;
+  margin-top: 22px;
+  padding: 12px;
+  font: inherit;
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--paper);
+  background: var(--ink);
+  border: 0;
+  border-radius: 2px;
   cursor: pointer;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.3);
 }
 
-button:hover { background: var(--accent-dark); }
+button:hover { background: #38342a; }
+
+button:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
+}
+
+button:focus-visible {
+  outline: 2px solid var(--stamp);
+  outline-offset: 2px;
+}
+
+/* ——— result slot: where the verdict prints ——— */
+
+.result-slot {
+  margin-top: 22px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--rule);
+}
+
+.slot-label {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
 
 .message {
-  margin-top: 16px;
-  min-height: 20px;
-  font-size: 14px;
+  min-height: 36px;
+  margin-top: 8px;
+  font-size: 13px;
+  line-height: 1.45;
 }
 
-.message.success { color: var(--success); }
+/* empty state: an invitation, not a hole */
+.message:empty::before {
+  content: "submit to print the result";
+  color: var(--faint);
+}
+
+/* the stamp — success lands like a rubber stamp on the slip */
+.message.success {
+  display: inline-block;
+  padding: 7px 11px;
+  color: var(--stamp);
+  border: 2px solid var(--stamp);
+  outline: 1px solid rgba(158, 43, 37, 0.45);
+  outline-offset: 2px;
+  background: rgba(158, 43, 37, 0.05);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  transform: rotate(-1.2deg);
+  animation: stamp-in 0.22s ease-out;
+}
+
+/* margin-note treatment for rejected input (used once validation exists) */
+.message.error { color: var(--stamp); }
+
+@keyframes stamp-in {
+  from { transform: rotate(-1.2deg) scale(1.35); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .message.success { animation: none; }
+  button:active { transform: none; }
+}
+
+/* ——— narrow frames (the specimen iframe is small) ——— */
+
+@media (max-width: 420px) {
+  body { padding: 16px 10px; }
+  .card { padding: 20px 18px 18px; }
+  .entry { grid-template-columns: 1fr; }
+  .entry label { padding-bottom: 3px; }
+}

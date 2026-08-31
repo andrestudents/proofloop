@@ -86,8 +86,8 @@ const boot = async (): Promise<void> => {
   if (DEMO_MODE) {
     console.log("[proofloop] DEMO_MODE=1 — replay only, no agent will be spawned");
   }
-  // The target-app is served in demo mode too: the committed target-app IS the
-  // end state of the recorded run, so the specimen can show the real artifact.
+  // The target-app is served in demo mode too, so the specimen shows the real
+  // artifact — in its committed before-state (the recorded run's starting point).
   try {
     await ensureTargetApp();
   } catch (err) {
